@@ -2,6 +2,8 @@ from django.db import models
 from common.models.base_model import BaseModel
 from common.models.country import Country
 from common.models.role import Role
+from organisations.models.organisation import Organisation
+
 
 class CricketPlayer(BaseModel):
     """
@@ -51,6 +53,13 @@ class CricketPlayer(BaseModel):
         null=True,
         blank=True,
         help_text="The team the player represents."
+    )
+    organisation = models.ForeignKey(
+        Organisation,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        help_text="The Organisation the player belongs"
     )
 
     # Performance stats
