@@ -1,20 +1,20 @@
 from django.db import models
 from .base_model import BaseModel
+from .role import Role
 
 class Person(BaseModel):
     """
     Represents a person (Coach, Captain, Player, etc.) associated with a team.
     """
-    ROLE_CHOICES = [
-        ('coach', 'Coach'),
-        ('captain', 'Captain'),
-        ('player', 'Player'),
-        ('support_staff', 'Support Staff'),
-    ]
-
     name = models.CharField(max_length=255)
     date_of_birth = models.DateField()
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES)
+    role = models.ForeignKey(
+        Role,
+        on_delete=models.SET_NULL,
+        verbose_name="person_role",
+        null=True,
+        blank=True
+    )
     nationality = models.CharField(max_length=100)
     email = models.EmailField(unique=True, blank=True, null=True)
     phone = models.CharField(max_length=15, blank=True, null=True)
